@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const ObjectId = require('mongodb').ObjectId;
-require('dotenv').config()
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 
@@ -51,12 +50,37 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
 
-            console.log("Deletig id:", id);
-
             const result = await productCollection.deleteOne(query);
             console.log(result);
             res.send(result);
 
+        })
+
+        // update product 
+        app.post('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedProduct = req.body;
+            const filter = { _id: ObjectId(id) };
+            const ooptions = { upsert: true };
+
+            const updatedDoc = {
+                $set: {
+                    name: updatedProduct.name,
+                    price: updatedProduct.price
+                }
+            };
+
+            const result = await productCollection.updateOne(filter, updatedDoc, ooptions);
+            res.send(result);
+        })
+
+        //get a single product to update
+        app.get('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+
+            const result = await productCollection.findOne(query);
+            res.send(result);
         })
 
 
