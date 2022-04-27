@@ -1,1 +1,1 @@
-##Server Deployed at: [https://dashboard.heroku.com/apps/morning-beyond-74670]
+##Server Deployed at: [https://dashboard.heroku.com/apps/morning-beyond-74670](https://dashboard.heroku.com/apps/morning-beyond-74670)
